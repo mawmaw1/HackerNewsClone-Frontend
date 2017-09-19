@@ -15,7 +15,7 @@ new Vue({
 
         getText: function(){
 
-            this.$http.get('http://localhost:8081/api')
+            this.$http.get('http://localhost:8081')
                 .then(function(text){
                     this.text = text;
                 }, function (error) {
