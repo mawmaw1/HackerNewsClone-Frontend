@@ -15,7 +15,7 @@ new Vue({
 
         getText: function(){
 
-            this.$http.get('http://localhost:8081')
+            this.$http.get('http://139.59.211.36:8081')
                 .then(function(text){
                     this.text = text;
                 }, function (error) {
