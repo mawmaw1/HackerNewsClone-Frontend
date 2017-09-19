@@ -6,7 +6,7 @@ new Vue({
     // Here we can register any values or collections that hold data
     // for the application
     data: {
-        text: "Brakuk"
+        text: "Loading..."
     },
 
 
@@ -15,9 +15,9 @@ new Vue({
 
         getText: function(){
 
-            this.$http.get('http://localhost:8081')
-                .then(function(text){
-                    this.text = text;
+            this.$http.get('http://139.59.211.36:8081/')
+                .then(function(response){
+                    this.text = response.body.msg;
                 }, function (error) {
 
                 })
@@ -27,9 +27,5 @@ new Vue({
         mounted: function () {
             this.getText();
         }
-
-}
-
-
-
+    }
 );
