@@ -1,7 +1,7 @@
 FROM node:boron
 
 #Create app directory
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app2
 
 # Install app dependencies
 COPY package.json .
