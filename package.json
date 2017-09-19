@@ -2,6 +2,7 @@
   "name": "hncfrontend",
   "version": "0.0.1",
   "dependencies": {
+    "express": "^4.15.4",
     "vue": "^2.4.4"
   }
 }
