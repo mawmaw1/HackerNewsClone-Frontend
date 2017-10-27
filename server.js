@@ -7,9 +7,9 @@ const app = express();
 // const cors = require('cors');
 
 const port = 8080;
-const ip = '0.0.0.0';
+// const ip = '0.0.0.0';
 // const ip = 'localhost';
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'dist')));
 
-app.listen(port, ip);
+app.listen(port);

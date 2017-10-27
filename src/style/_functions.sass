@@ -1,0 +1,5 @@
+@mixin responsive($property, $mobile-value, $desktop-value)
+  @media screen and (max-width: 700px)
+    #{$property}: $mobile-value
+  @media screen and (min-width: 701px)
+    #{$property}: $desktop-value
