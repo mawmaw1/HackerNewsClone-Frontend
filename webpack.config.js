@@ -14,7 +14,7 @@ const appJsPath = path.join(paths.JS, 'app.js');
 
 // Webpack configuration
 module.exports = {
-    entry: path.join(paths.JS, 'app.js'),
+    entry: path.join(paths.SRC, 'app.js'),
     output: {
         path: paths.DIST,
         filename: 'app.bundle.js'
@@ -37,11 +37,18 @@ module.exports = {
             {
                 test: /\.sass$/,
                 exclude: /node_modules/,
-                loader: ExtractTextPlugin.extract(
-                    [
-                        'style-loader', 'sass-loader'
-                    ]
+                loader: ExtractTextPlugin.extract({
+                    use: [ 'css-loader', 'sass-loader' ],
+                    fallback: 'style-loader'
+                    }
                 ),
+            },
+            {
+                test: /\.vue$/,
+                exclude: /node_modules/,
+                use: [
+                    'vue-loader'
+                ]
             }
         ],
         // loaders: [
