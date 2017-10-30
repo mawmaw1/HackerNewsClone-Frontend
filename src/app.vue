@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <top-bar ></top-bar>
+        
     </div>
 </template>
 
