@@ -5,9 +5,6 @@ import './style/style.sass';
 import Vue from 'vue'
 import App from './app.vue'
 
-console.log('yo');
-console.log(App);
-
 // app
 new Vue({
     el: '#app',
@@ -15,4 +12,3 @@ new Vue({
     components: { App },
     render: h => h(App)
 });
-
