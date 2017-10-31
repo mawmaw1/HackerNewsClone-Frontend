@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <top-bar ></top-bar>
+        <post-list></post-list>
         <v-footer></v-footer>
     </div>
 
@@ -9,9 +10,10 @@
 <script>
     import topBar from './components/top-bar.vue'
     import vFooter from './components/v-footer.vue'
+    import postList from './components/post-list.vue'
 
     export default {
-        components: {topBar, vFooter }
+        components: {topBar, vFooter, postList }
     }
 </script>
 

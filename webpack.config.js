@@ -49,6 +49,12 @@ module.exports = {
                 use: [
                     'vue-loader'
                 ]
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader'
+                ]
             }
         ],
         // loaders: [
@@ -59,6 +65,9 @@ module.exports = {
         // ]
     },
     resolve: {
-        extensions: ['.js']
+        extensions: ['.js'],
+        alias: {
+            assets: path.resolve(__dirname, './assets'),
+        }
     }
 };

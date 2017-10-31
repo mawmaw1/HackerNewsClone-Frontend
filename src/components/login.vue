@@ -18,13 +18,16 @@
 
 <script>
     export default {
-        data() {
+        data(){
             return {
+                username: '',
+                password: '',
                 loggedIn: false
             }
         },
         methods: {
             onLogin(e){
+                // todo
                 console.log('hello')
                 this.loggedIn = !this.loggedIn
             }
