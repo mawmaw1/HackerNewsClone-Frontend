@@ -18,7 +18,8 @@
         grid-area: footer
         align-self: end
 
-        height: 120px
+        /*height: 120px*/
+        height: 100%
         display: grid
         grid-template-columns: repeat(4, 1fr)
         grid-template-rows: 1fr

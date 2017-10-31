@@ -19,12 +19,13 @@
 
 <style rel="stylesheet/sass" lang="sass">
     $top-bar-height: 80px
+    $footer-height: 120px
 
     #app
         width: 100%
         height: 100%
         display: grid
         grid-template-columns: 1fr 1fr 1fr 1fr
-        grid-template-rows: $top-bar-height 1fr 1fr
+        grid-template-rows: $top-bar-height 1fr $footer-height
         grid-template-areas: "top top top top" "main main main main" "footer footer footer footer"
 </style>
