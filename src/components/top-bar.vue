@@ -1,6 +1,6 @@
 <template>
     <div id="top-bar">
-        <div id="logo">HakkeNyheder</div>
+        <div id="logo">Hacker News</div>
         <router-link to="/" id="postsNav" class="nav"><p>Posts</p></router-link>
         <a href="#" id="submit" class="nav"><p>Submit</p></a>
         <router-link to="/login" id="loginNav" class="nav"><p>Login</p></router-link>
@@ -28,23 +28,25 @@
         height: 100%
         grid-area: top
         display: grid
-        grid-template-columns: 3fr repeat(4, 1fr) 2fr
+        grid-template-columns: 400px repeat(2, 120px) 1fr
         grid-template-rows: 1fr
+
         border-bottom: 1px solid $c-grey-800
 
         #logo
             margin-bottom: 20px
             font-family: Raleway, sans-serif
-            justify-self: center
+            justify-self: start
             align-self: end
             font-size: 40px
             font-weight: 200
             line-height: .95
             color: $c-grey-700
+            padding-left: 50px
 
         #loginNav
-            grid-column: 6 / 7
-            grid-row: 1 / 2
+            justify-self: end
+            margin-right: 25px
 
         .nav
             margin-bottom: 10px
@@ -61,5 +63,8 @@
         .nav:hover p
             border-bottom: 1px solid $c-green-700
             color: $c-grey-600
+
+
+
 
 </style>

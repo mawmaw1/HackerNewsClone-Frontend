@@ -32,6 +32,16 @@
             numberOfComments(){
                 return this.post.comments.length || 0;
             }
+        },
+        methods: {
+            navigateToPost(){
+                this.$router.push({
+                    name: 'Post',
+                    params: {
+                        postId: this.post.id
+                    }
+                })
+            }
         }
     }
 
@@ -49,7 +59,7 @@
             <p><a :href="post.url">{{post.title}}</a> <span><a :href="domainUrl">({{shortUrl}})</a></span></p>
         </div>
         <div class="details">
-            <p>{{post.points}} points by <a href="#">{{post.username}}</a> | <a href="#">{{numberOfComments}} comments</a></p>
+            <p>{{post.points}} points by <a href="#">{{post.username}}</a> | <a href="#" v-on:click="navigateToPost">{{numberOfComments}} comments</a></p>
         </div>
     </li>
 </template>

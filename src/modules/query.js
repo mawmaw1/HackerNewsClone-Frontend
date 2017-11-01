@@ -68,6 +68,19 @@ query.getPosts = function(page){
     }).then(posts => translatePosts(posts))
 };
 
+query.getPost = function(postId){
+    let fullUrl = url('post');
+    fullUrl += `/${postId}`;
+    return fetch(fullUrl).then(response => {
+        if(response.ok){
+            return response.json();
+        }else{
+            console.error(response);
+            return Promise.reject('Something went wrong :(')
+        }
+    }).then()
+};
+
 query.login = function(username, password){
     let fullUrl = url('login');
     return fetch(fullUrl, {

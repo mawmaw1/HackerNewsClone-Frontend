@@ -4,9 +4,11 @@
     import vFooter from './components/v-footer.vue'
     import postList from './components/post-list.vue'
     import login from './components/login.vue'
+    import post from './components/post.vue'
+//    import routes from './routes'
 
     export default {
-        components: {topBar, vFooter, postList, login },
+        components: {topBar, vFooter, postList, login, post },
         created(){
             this.$router.addRoutes([
                 {
@@ -18,9 +20,15 @@
                     path:'/login',
                     name: 'Login',
                     component: login
+                },
+                {
+                    path:'/post/:postId',
+                    name: 'Post',
+                    component: post
                 }
             ])
         }
+
     }
 </script>
 

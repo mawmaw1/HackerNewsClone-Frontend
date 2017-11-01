@@ -1,5 +1,7 @@
 <script>
-    const query = require('../modules/query')
+    const query = require('../modules/query');
+    const local = require('../modules/local');
+
 
     export default {
         data(){
@@ -98,7 +100,6 @@
         @include button($c-orange-700)
 
 
-
     #login
         padding: 25px
 
@@ -106,8 +107,6 @@
             margin: 15px 5px
 
         h1
-            font-family: Raleway, sans-serif
-            font-weight: 200
             margin-bottom: 20px
 
         .login-form

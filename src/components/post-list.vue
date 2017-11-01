@@ -19,6 +19,8 @@
     import error from './error.vue'
     import query from '../modules/query'
 
+    const local = require('../modules/local');
+
     export default {
         data () {
             return {
@@ -33,12 +35,14 @@
             }
         },
         created(){
-            this.getPosts()
+            this.getPosts();
+            console.log(this.$root.loggedIn);
         },
         watch: {
             page(val){
                 this.getPosts().then(_ => {
                     this.scrollToTop();
+                    local.setCookie(val);
                 });
             }
         },

@@ -14,5 +14,10 @@ new Vue({
     template: '<App/>',
     components: { App },
     render: h => h(App),
-    router: new Router()
+    router: new Router(),
+    data(){
+        return {
+            loggedIn: false
+        }
+    }
 });
