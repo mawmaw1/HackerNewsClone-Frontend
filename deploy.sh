@@ -11,5 +11,9 @@ docker rm `docker ps -a | grep ${DOCKER_ID}/hncfrontend | awk '{print substr ($0
   #  docker rmi ${DOCKER_ID}/hncfrontend:${BUILD_NUMBER}
 #fi
 # get the newest version of the containerized web application and run it
+
+docker system prune -af
+
+
 docker pull ${DOCKER_ID}/hncfrontend:${BUILD_NUMBER}
 docker run -d -ti -p 8083:8080 ${DOCKER_ID}/hncfrontend:${BUILD_NUMBER}
