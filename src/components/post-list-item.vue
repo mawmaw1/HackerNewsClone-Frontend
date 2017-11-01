@@ -2,40 +2,56 @@
     //    import local from '../modules/local';
 
     export default {
-        props: ['item'],
-        mounted: function () {
-            this.$nextTick(function () {
-
-            })
-        },
+        props: ['post', 'index'],
         computed: {
             shortUrl(){
-                const url = this.item.url;
-                const regex = /(http[s]*:\/\/)(.*)+?(?=\/)/;
-                return url.match(regex)[2]
+                let returnValue = '';
+                const url = this.post.url;
+                console.log(url);
+                const regex = /(http[s]*:\/\/[www.]*)(.+?(?=[/|\\]))/;
+
+                const match = url.match(regex);
+                if(match !== null && match.length > 2){
+                    returnValue = url.match(regex)[2];
+                }
+
+                return returnValue;
             },
             domainUrl(){
-                const url = this.item.url;
-                const regex = /(http[s]*:\/\/.*)+?(?=\/)/;
-                return url.match(regex)[1]
+                let returnValue = '';
+                const url = this.post.url;
+                console.log(url);
+                const regex = /(http[s]*:[/][/])*(.+?(?=[/|\\]))/;
+
+                const match = url.match(regex);
+                if(match !== null && match.length > 0){
+                    returnValue = url.match(regex)[0];
+                }
+
+                return returnValue;
+            },
+            properIndex(){
+                return this.index + 1;
+//                asd
             }
         }
     }
+
 </script>
 
 
 <template>
     <li>
-        <div class="placement">{{item.placement}}.</div>
+        <div class="placement">{{properIndex}}.</div>
         <div class="button-container">
             <button class="upvote"><i class="material-icons">keyboard_arrow_up</i></button>
             <button class="downvote"><i class="material-icons">keyboard_arrow_down</i></button>
         </div>
         <div class="title-and-url">
-            <p><a :href="item.url">{{item.title}}</a> <span><a :href="domainUrl">({{shortUrl}})</a></span></p>
+            <p><a :href="post.url">{{post.title}}</a> <span><a :href="domainUrl">({{shortUrl}})</a></span></p>
         </div>
         <div class="details">
-            <p>{{item.points}} points by <a href="#">{{item.author}}</a> | <a href="#">{{item.numberOfComments}} comments</a></p>
+            <p>{{post.points}} points by <a href="#">{{post.author}}</a> | <a href="#">{{post.numberOfComments}} comments</a></p>
         </div>
 
         <!--<button class="upvote"></button>-->

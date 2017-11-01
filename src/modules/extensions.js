@@ -8,5 +8,15 @@ _.objEach = function(object, func){
     }
 };
 
+_.getTranslator = function(mappings){
+    return (objIn) => {
+        const objOut = {};
+        _.objEach(mappings, function(oldKey, newKey){
+            const rightVal = objIn[oldKey] || objIn[newKey];
+            !!rightVal && (objOut[newKey] = rightVal);
+        });
+        return objOut;
+    }
+};
 
 module.exports = _;

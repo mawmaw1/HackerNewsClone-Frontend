@@ -8,7 +8,7 @@ const args = {
 };
 
 function url(route, params){
-    return [stripSlashes(url), stripSlashes(route)].join('/');
+    return [stripSlashes(args.url), stripSlashes(route)].join('/');
 }
 
 function stripSlashes(string){
@@ -18,13 +18,52 @@ function stripSlashes(string){
     return string.replace(startReg, '').replace(endReg, '');
 }
 
+function getSkipByPage(page){
+    return args.itemsPerpage * (page - 1);
+}
+
+function getLimit(){
+    return args.itemsPerpage;
+}
+
+const postTranslator = _.getTranslator({
+    '_id': 'id',
+    'username': 'username',
+    'post_type': 'type',
+    'pwd_hash': 'passwordHash',
+    'post_title': 'title',
+    'post_url': 'url',
+    'post_parent': 'parent',
+    'hanesst_id': 'hanesstId',
+    'post_text': 'text',
+    'created_at': 'createdAt',
+    '__v': '__v',
+    'comments': 'comments'
+});
+
+function translatePost(post){
+    return postTranslator(post);
+}
+
+function translatePosts(posts){
+    return posts.map(translatePost);
+}
+
 query.getPosts = function(page){
-    fetch(url('post'))
-        .then(response => {
-            if(response.ok()){
-                console.log('den er bra')
-            }
-        })
+
+    return fetch(url('posts'), {
+        method: 'POST',
+        body: JSON.stringify({ skip: getSkipByPage(page), limit: getLimit()})
+    }).then(response => {
+        if(response.ok){
+            return response.json();
+        }else{
+            console.error(response);
+            return Promise.reject('Something went wrong :(')
+        }
+    }).then(posts => translatePosts(posts))
 };
+
+
 
 module.exports = query;

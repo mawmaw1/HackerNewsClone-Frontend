@@ -15,6 +15,7 @@
     @import '../style/colors'
 
     #loading
+        height: 100%
         grid-area: main
         display: grid
         grid-template-columns: 1fr 1fr
@@ -36,7 +37,6 @@
             justify-self: center
             align-self: end
             margin-bottom: 5px
-
 
 
         .load-text

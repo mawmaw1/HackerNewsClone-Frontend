@@ -2,8 +2,9 @@
     <div id="post-list-container">
         <loading v-if="loading"></loading>
         <ul v-if="contentReady" id="post-list">
-            <post-list-item v-for="item in items" :item="item" :key="item.placement"></post-list-item>
+            <post-list-item v-for="(post, index) in posts" :index="index" :post="post" :key="post.id"></post-list-item>
         </ul>
+        <error v-if="displayError" :error="error"></error>
     </div>
 
 </template>
@@ -12,6 +13,7 @@
     import mock from '../dev/mock'
     import postListItem from './post-list-item.vue'
     import loading from './loading.vue'
+    import error from './error.vue'
     import query from '../modules/query'
 
     export default {
@@ -19,15 +21,24 @@
             return {
                 loading: false,
                 contentReady: false,
-                page: 1
-//                items: mock.getPostList(5)
+                displayError: true,
+                page: 1,
+                error: {
+                    header: 'Error',
+                    text: 'Something went wrong :('
+                }
             }
         },
         created(){
-            query.getPosts()
+            this.loading = true;
+            query.getPosts(this.page).then(posts => {
+                this.posts = posts;
+                this.loading = false;
+                this.contentReady = true;
+            })
         },
         components: {
-            postListItem, loading
+            postListItem, loading, error
         }
 
     }
