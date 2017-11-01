@@ -1,9 +1,9 @@
 <template>
     <div id="top-bar">
         <div id="logo">HakkeNyheder</div>
-        <a href="#" id="posts" class="nav"><p>Posts</p></a>
+        <router-link to="/" id="postsNav" class="nav"><p>Posts</p></router-link>
         <a href="#" id="submit" class="nav"><p>Submit</p></a>
-        <login></login>
+        <router-link to="/login" id="loginNav" class="nav"><p>Login</p></router-link>
     </div>
 </template>
 
@@ -30,7 +30,6 @@
         display: grid
         grid-template-columns: 3fr repeat(4, 1fr) 2fr
         grid-template-rows: 1fr
-        /*grid-template-areas: "." "login" "." "." "." "."*/
         border-bottom: 1px solid $c-grey-800
 
         #logo
@@ -39,8 +38,13 @@
             justify-self: center
             align-self: end
             font-size: 40px
+            font-weight: 200
             line-height: .95
             color: $c-grey-700
+
+        #loginNav
+            grid-column: 6 / 7
+            grid-row: 1 / 2
 
         .nav
             margin-bottom: 10px

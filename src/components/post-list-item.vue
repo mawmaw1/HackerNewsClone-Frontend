@@ -7,9 +7,7 @@
             shortUrl(){
                 let returnValue = '';
                 const url = this.post.url;
-                console.log(url);
                 const regex = /(http[s]*:\/\/[www.]*)(.+?(?=[/|\\]))/;
-
                 const match = url.match(regex);
                 if(match !== null && match.length > 2){
                     returnValue = url.match(regex)[2];
@@ -20,9 +18,7 @@
             domainUrl(){
                 let returnValue = '';
                 const url = this.post.url;
-                console.log(url);
                 const regex = /(http[s]*:[/][/])*(.+?(?=[/|\\]))/;
-
                 const match = url.match(regex);
                 if(match !== null && match.length > 0){
                     returnValue = url.match(regex)[0];
@@ -32,7 +28,9 @@
             },
             properIndex(){
                 return this.index + 1;
-//                asd
+            },
+            numberOfComments(){
+                return this.post.comments.length || 0;
             }
         }
     }
@@ -51,11 +49,8 @@
             <p><a :href="post.url">{{post.title}}</a> <span><a :href="domainUrl">({{shortUrl}})</a></span></p>
         </div>
         <div class="details">
-            <p>{{post.points}} points by <a href="#">{{post.author}}</a> | <a href="#">{{post.numberOfComments}} comments</a></p>
+            <p>{{post.points}} points by <a href="#">{{post.username}}</a> | <a href="#">{{numberOfComments}} comments</a></p>
         </div>
-
-        <!--<button class="upvote"></button>-->
-        <!--<button v-if="local.loggedIn()" class="downvote"></button>-->
     </li>
 </template>
 
@@ -68,8 +63,6 @@
     $item-height: 56px
     $placement-width: 40px
     $button-container-width: 40px
-
-
 
     li
         padding: 3px

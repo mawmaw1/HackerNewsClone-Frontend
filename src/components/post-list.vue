@@ -2,11 +2,14 @@
     <div id="post-list-container">
         <loading v-if="loading"></loading>
         <ul v-if="contentReady" id="post-list">
-            <post-list-item v-for="(post, index) in posts" :index="index" :post="post" :key="post.id"></post-list-item>
+            <post-list-item v-for="(post, index) in posts" :index="index + (25 * (page-1))" :post="post" :key="post.id"></post-list-item>
         </ul>
+        <div v-if="contentReady" class="page-nav">
+            <button id="prevBtn" v-on:click="page--" :disabled="this.page == 1">previous page</button>
+            <button id="nextBtn" v-on:click="page++">next page</button>
+        </div>
         <error v-if="displayError" :error="error"></error>
     </div>
-
 </template>
 
 <script>
@@ -21,7 +24,7 @@
             return {
                 loading: false,
                 contentReady: false,
-                displayError: true,
+                displayError: false,
                 page: 1,
                 error: {
                     header: 'Error',
@@ -30,15 +33,33 @@
             }
         },
         created(){
-            this.loading = true;
-            query.getPosts(this.page).then(posts => {
-                this.posts = posts;
-                this.loading = false;
-                this.contentReady = true;
-            })
+            this.getPosts()
+        },
+        watch: {
+            page(val){
+                this.getPosts().then(_ => {
+                    this.scrollToTop();
+                });
+            }
         },
         components: {
             postListItem, loading, error
+        },
+        methods: {
+            getPosts(){
+                this.loading = true;
+                return query.getPosts(this.page).then(posts => {
+                    this.posts = posts;
+                    this.contentReady = true;
+                }).catch(_ => {
+                    this.displayError = true;
+                }).then(_ => {
+                    this.loading = false;
+                })
+            },
+            scrollToTop(){
+                window.scrollTo(0,80); // magic number, yay
+            }
         }
 
     }
@@ -48,6 +69,7 @@
     @import "../style/colors"
     @import "../style/dev"
     @import '../style/loader'
+    @import '../style/functions'
 
     #post-list-container
         grid-area: main
@@ -56,8 +78,16 @@
             width: 100%
             height: 100%
 
+        .page-nav
+            width: 100%
+            padding: 10px
 
+            #prevBtn
+                @include button($c-blue-700)
 
+            #nextBtn
+                margin-left: 10px
+                @include button($c-blue-700)
 
 
 

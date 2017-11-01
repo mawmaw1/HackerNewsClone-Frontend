@@ -3,3 +3,31 @@
     #{$property}: $mobile-value
   @media screen and (min-width: 701px)
     #{$property}: $desktop-value
+
+
+
+@mixin button($color)
+
+  font-family: 'Raleway', sans-serif
+  font-size: 18px
+  font-weight: 500
+  padding: 5px 14px 7px 14px
+  border: 2px solid $color
+  color: $color
+  border-radius: 99px
+  letter-spacing: 1px
+
+  &:hover
+    background: $color
+    color: white
+
+  &:focus
+    outline: none
+
+  &:disabled
+    border-color: $c-grey-800
+    color: $c-grey-800
+
+    &:hover
+      background: inherit
+      color: $c-grey-800

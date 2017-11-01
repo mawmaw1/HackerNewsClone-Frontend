@@ -2,12 +2,16 @@ const query = {};
 
 const _ = require('./extensions');
 
+const jsonHeaders = new Headers();
+
+jsonHeaders.append("Content-Type", "application/json");
+
 const args = {
     url: 'http://139.59.211.36:8081',
     itemsPerpage: 25
 };
 
-function url(route, params){
+function url(route){
     return [stripSlashes(args.url), stripSlashes(route)].join('/');
 }
 
@@ -37,6 +41,7 @@ const postTranslator = _.getTranslator({
     'hanesst_id': 'hanesstId',
     'post_text': 'text',
     'created_at': 'createdAt',
+    'points':'points',
     '__v': '__v',
     'comments': 'comments'
 });
@@ -50,11 +55,10 @@ function translatePosts(posts){
 }
 
 query.getPosts = function(page){
-
-    return fetch(url('posts'), {
-        method: 'POST',
-        body: JSON.stringify({ skip: getSkipByPage(page), limit: getLimit()})
-    }).then(response => {
+    const params = { skip: getSkipByPage(page), limit: getLimit()};
+    let fullUrl = url('posts');
+    fullUrl += `/${params.skip}/${params.limit}`;
+    return fetch(fullUrl).then(response => {
         if(response.ok){
             return response.json();
         }else{
@@ -64,6 +68,30 @@ query.getPosts = function(page){
     }).then(posts => translatePosts(posts))
 };
 
+query.login = function(username, password){
+    let fullUrl = url('login');
+    return fetch(fullUrl, {
+        method: 'POST',
+        headers: jsonHeaders,
+        body: JSON.stringify({username, password})
+    }).then(response => {
+        if(!response.ok){
+            return Promise.reject('Bad username/password');
+        }
+    })
+};
 
+query.register = function(username, password){
+    let fullUrl = url('register');
+    return fetch(fullUrl, {
+        method: 'POST',
+        headers: jsonHeaders,
+        body: JSON.stringify({username, password})
+    }).then(response => {
+        if(!response.ok){
+            return Promise.reject('Server error');
+        }
+    })
+};
 
 module.exports = query;

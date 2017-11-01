@@ -1,21 +1,38 @@
+<script>
+
+    import topBar from './components/top-bar.vue'
+    import vFooter from './components/v-footer.vue'
+    import postList from './components/post-list.vue'
+    import login from './components/login.vue'
+
+    export default {
+        components: {topBar, vFooter, postList, login },
+        created(){
+            this.$router.addRoutes([
+                {
+                    path: '/',
+                    name: 'Posts',
+                    component: postList
+                },
+                {
+                    path:'/login',
+                    name: 'Login',
+                    component: login
+                }
+            ])
+        }
+    }
+</script>
+
 <template>
     <div id="app">
         <top-bar ></top-bar>
-        <post-list></post-list>
+        <router-view></router-view>
         <v-footer></v-footer>
     </div>
 
 </template>
 
-<script>
-    import topBar from './components/top-bar.vue'
-    import vFooter from './components/v-footer.vue'
-    import postList from './components/post-list.vue'
-
-    export default {
-        components: {topBar, vFooter, postList }
-    }
-</script>
 
 <style rel="stylesheet/sass" lang="sass">
     $top-bar-height: 80px
