@@ -2,9 +2,12 @@ const query = {};
 
 const _ = require('./extensions');
 
+const origin = window.location.origin;
+
 const jsonHeaders = new Headers();
 
 jsonHeaders.append("Content-Type", "application/json");
+jsonHeaders.append("Origin", origin);
 
 const args = {
     url: 'http://139.59.211.36:8081',
