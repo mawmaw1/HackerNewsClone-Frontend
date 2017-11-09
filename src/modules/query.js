@@ -91,6 +91,7 @@ query.login = function(username, password){
         headers: jsonHeaders,
         body: JSON.stringify({username, password})
     }).then(response => {
+        console.log(response.headers.get())
         if(!response.ok){
             return Promise.reject('Bad username/password');
         }
