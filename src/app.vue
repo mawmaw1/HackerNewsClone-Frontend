@@ -5,10 +5,10 @@
     import postList from './components/post-list.vue'
     import login from './components/login.vue'
     import post from './components/post.vue'
-//    import routes from './routes'
+    import comment from './components/comment.vue'
 
     export default {
-        components: {topBar, vFooter, postList, login, post },
+        components: {topBar, vFooter, postList, login, post, comment },
         created(){
             this.$router.addRoutes([
                 {

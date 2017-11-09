@@ -22,7 +22,21 @@ h1
   font-family: Raleway, sans-serif
   font-weight: 200
 
+#analytics-overlay
+  position: fixed
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  background-image: url('../assets/images/analytics-overlay.jpg')
+  //background-repeat: no-repeat
+  z-index: 99
+  opacity: 0
+  pointer-events: none
+  transition: 0.2s ease-in
 
+  &._visible
+    opacity: 0.5
 
 // ===== placeholder defaults =====
 $placeholder-color: $c-grey-800

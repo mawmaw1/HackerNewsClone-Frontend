@@ -1,14 +1,17 @@
 <template>
     <div id="top-bar">
-        <div id="logo">Hacker News</div>
+        <router-link to="/" id="logo" @mouseover.native="logoHoverStart" @mouseleave.native="logoHoverEnd">Hacker News</router-link>
         <router-link to="/" id="postsNav" class="nav"><p>Posts</p></router-link>
-        <a href="#" id="submit" class="nav"><p>Submit</p></a>
+        <!--<a href="#" id="submit" class="nav"><p>Submit</p></a>-->
+        <router-link to="/submit" id="submitNav" class="nav"><p>Submit</p></router-link>
         <router-link to="/login" id="loginNav" class="nav"><p>Login</p></router-link>
     </div>
 </template>
 
 <script>
     import login from './login.vue'
+    import homeIcon from '../assets/images/home.png';
+    let analyticsOverlay;
 
     export default {
         components: {login},
@@ -16,6 +19,17 @@
             return {
                 title: 'HakkeNyhedern'
             }
+        },
+        methods: {
+            logoHoverStart(){
+                analyticsOverlay.classList.add('_visible')
+            },
+            logoHoverEnd(){
+                analyticsOverlay.classList.remove('_visible')
+            }
+        },
+        mounted(){
+            analyticsOverlay = document.getElementById('analytics-overlay')
         }
     }
 </script>
@@ -43,6 +57,10 @@
             line-height: .95
             color: $c-grey-700
             padding-left: 50px
+
+
+
+
 
         #loginNav
             justify-self: end

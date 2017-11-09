@@ -22,12 +22,15 @@
     const local = require('../modules/local');
 
     export default {
+        components: {
+            postListItem, loading, error
+        },
         data () {
             return {
                 loading: false,
                 contentReady: false,
                 displayError: false,
-                page: 1,
+//                page: 1,
                 error: {
                     header: 'Error',
                     text: 'Something went wrong :('
@@ -42,12 +45,8 @@
             page(val){
                 this.getPosts().then(_ => {
                     this.scrollToTop();
-                    local.setCookie(val);
                 });
             }
-        },
-        components: {
-            postListItem, loading, error
         },
         methods: {
             getPosts(){
@@ -62,10 +61,15 @@
                 })
             },
             scrollToTop(){
-                window.scrollTo(0,80); // magic number, yay
+                window.scrollTo(0,0); // magic number, yay
+            }
+        },
+        props: {
+            page: {
+                default: 1,
+                type: Number
             }
         }
-
     }
 </script>
 

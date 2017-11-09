@@ -1,30 +1,15 @@
 <script>
     //    import local from '../modules/local';
 
+
     export default {
         props: ['post', 'index'],
         computed: {
             shortUrl(){
-                let returnValue = '';
-                const url = this.post.url;
-                const regex = /(http[s]*:\/\/[www.]*)(.+?(?=[/|\\]))/;
-                const match = url.match(regex);
-                if(match !== null && match.length > 2){
-                    returnValue = url.match(regex)[2];
-                }
-
-                return returnValue;
+                return tryMatch(this.post.url, /(http[s]*:\/\/[www.]*)(.+?(?=[/|\\]))/);
             },
             domainUrl(){
-                let returnValue = '';
-                const url = this.post.url;
-                const regex = /(http[s]*:[/][/])*(.+?(?=[/|\\]))/;
-                const match = url.match(regex);
-                if(match !== null && match.length > 0){
-                    returnValue = url.match(regex)[0];
-                }
-
-                return returnValue;
+                return tryMatch(this.post.url, /(http[s]*:[/][/])*(.+?(?=[/|\\]))/);
             },
             properIndex(){
                 return this.index + 1;
@@ -45,6 +30,21 @@
         }
     }
 
+    function tryMatch(url, regex){
+        if(!url){
+            return "";
+        }
+
+        let returnValue = '';
+
+        const match = url.match(regex);
+        if(match !== null && match.length > 2){
+            returnValue = url.match(regex)[2];
+        }
+
+        return returnValue;
+    }
+
 </script>
 
 
@@ -56,7 +56,10 @@
             <button class="downvote"><i class="material-icons">keyboard_arrow_down</i></button>
         </div>
         <div class="title-and-url">
-            <p><a :href="post.url">{{post.title}}</a> <span><a :href="domainUrl">({{shortUrl}})</a></span></p>
+            <p>
+                <a class="url" :href="domainUrl">({{shortUrl}})</a>
+                <a class="title" :href="post.url">{{post.title}}</a>
+            </p>
         </div>
         <div class="details">
             <p>{{post.points}} points by <a href="#">{{post.username}}</a> | <a href="#" v-on:click="navigateToPost">{{numberOfComments}} comments</a></p>
@@ -104,20 +107,31 @@
             align-self: center
 
             p
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+                max-width: 100%
+                display: inline-block
+
                 font-size: 18px
-                a
+                .title
+
                     color: $c-blue-600
 
-                a:visited
+                .title:visited
                     color: $c-purple-600
 
-            span
-                font-size: 14px
 
-                a
+
+
+
+                .url
+                    margin: 4px 0 0 4px
+                    float: right
+                    font-size: 14px
                     color: $c-grey-700
 
-                a:visited
+                .url:visited
                     color: $c-grey-700
 
         .details
