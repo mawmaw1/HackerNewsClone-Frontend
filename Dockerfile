@@ -8,8 +8,7 @@ RUN npm config set registry http://registry.npmjs.org/ && npm install
 
 # Bundle app source
 COPY . /usr/src/app
-
+RUN npm run build
 EXPOSE 8080
 
-CMD ["npm", "run", "build"]
 CMD ["npm", "start"]
