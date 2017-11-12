@@ -1,12 +1,12 @@
 <template>
     <div id="post-list-container">
-        <loading v-if="loading"></loading>
+        <loading v-if="loading && !contentReady"></loading>
         <ul v-if="contentReady" id="post-list">
-            <post-list-item v-for="(post, index) in posts" :index="index + (25 * (page-1))" :post="post" :key="post.id"></post-list-item>
+            <post-list-item v-for="(post, index) in posts" :index="index + (25 * (displayedPage - 1))" :post="post" :key="post.id"></post-list-item>
         </ul>
         <div v-if="contentReady" class="page-nav">
-            <button id="prevBtn" v-on:click="page--" :disabled="this.page == 1">previous page</button>
-            <button id="nextBtn" v-on:click="page++">next page</button>
+            <button id="prevBtn" v-on:click="prevPage" :disabled="this._page == 1 || this.loading">previous page</button>
+            <button id="nextBtn" v-on:click="nextPage" :disabled="this.loading">next page</button>
         </div>
         <error v-if="displayError" :error="error"></error>
     </div>
@@ -30,7 +30,7 @@
                 loading: false,
                 contentReady: false,
                 displayError: false,
-//                page: 1,
+                displayedPage: 1,
                 error: {
                     header: 'Error',
                     text: 'Something went wrong :('
@@ -41,35 +41,66 @@
             this.getPosts();
             console.log(this.$root.loggedIn);
         },
+        computed: {
+            _page(){
+                return Number(this.$route.params.page);
+            }
+        },
         watch: {
-            page(val){
-                this.getPosts().then(_ => {
-                    this.scrollToTop();
-                });
+            '$route'(){
+                this.getPosts();
+            },
+            displayedPage(){
+                this.scrollToTop();
             }
         },
         methods: {
-            getPosts(){
+            getPosts(page = this._page){
                 this.loading = true;
-                return query.getPosts(this.page).then(posts => {
+                return query.getPosts(page).then(posts => {
                     this.posts = posts;
                     this.contentReady = true;
+                    this.updateRouterWithPage(page);
+                    this.displayedPage = page;
                 }).catch(_ => {
                     this.displayError = true;
                 }).then(_ => {
                     this.loading = false;
                 })
             },
+            updateRouterWithPage(page){
+                this.$router.push({
+                    name: 'Posts',
+                    params: {
+                        page: page
+                    }
+                });
+            },
+            nextPage(){
+                const page = this._page + 1;
+                this.$router.push({
+                    name: 'Posts',
+                    params: {
+                        page: page
+                    }
+                });
+//                this.getPosts(next);
+            },
+            prevPage(){
+                const page = this._page - 1;
+                this.$router.push({
+                    name: 'Posts',
+                    params: {
+                        page: page
+                    }
+                });
+//                this.getPosts(prev);
+            },
             scrollToTop(){
-                window.scrollTo(0,0); // magic number, yay
+                window.scrollTo(0,0);
             }
         },
-        props: {
-            page: {
-                default: 1,
-                type: Number
-            }
-        }
+        props: ['page']
     }
 </script>
 

@@ -2,7 +2,9 @@
     import mock from '../dev/mock'
     import loading from './loading.vue'
     import error from './error.vue'
+    import comment from './comment.vue'
     import query from '../modules/query'
+
     import _ from '../modules/extensions'
 
     const postTranslator = _.getTranslator({
@@ -21,9 +23,24 @@
         'comments': 'comments'
     });
 
+    function tryMatch(url, regex){
+        if(!url){
+            return "";
+        }
+
+        let returnValue = '';
+
+        const match = url.match(regex);
+        if(match !== null && match.length > 2){
+            returnValue = url.match(regex)[2];
+        }
+
+        return returnValue;
+    }
+
     export default {
         components: {
-            loading, error
+            loading, error, comment
         },
         data(){
             return {
@@ -42,26 +59,10 @@
                 return postTranslator(this._post);
             },
             shortUrl(){
-                let returnValue = '';
-                const url = this.post.url;
-                const regex = /(http[s]*:\/\/[www.]*)(.+?(?=[/|\\]))/;
-                const match = url.match(regex);
-                if(match !== null && match.length > 2){
-                    returnValue = url.match(regex)[2];
-                }
-
-                return returnValue;
+                return tryMatch(this.post.url, /(http[s]*:\/\/[www.]*)(.+?(?=[/|\\]))/);
             },
             domainUrl(){
-                let returnValue = '';
-                const url = this.post.url;
-                const regex = /(http[s]*:[/][/])*(.+?(?=[/|\\]))/;
-                const match = url.match(regex);
-                if(match !== null && match.length > 0){
-                    returnValue = url.match(regex)[0];
-                }
-
-                return returnValue;
+                return tryMatch(this.post.url, /(http[s]*:[/][/])*(.+?(?=[/|\\]))/);
             },
             numberOfComments(){
                 return this.comments.length || 0;
@@ -76,6 +77,7 @@
                 return query.getPost(this.postId).then(response => {
                     this._post = response.post;
                     this.comments = response.comments;
+                    console.log(this.comments)
                     this.contentReady = true;
                 }).catch(_ => {
                     this.displayError = true;
@@ -103,6 +105,8 @@
             <div class="comment-section">
                 <h1>Comments <span>({{numberOfComments}})</span></h1>
             </div>
+            <!--<post-list-item v-for="(post, index) in posts" :index="index + (25 * (displayedPage - 1))" :post="post" :key="post.id"></post-list-item>-->
+            <comment v-for="(comment, index) in comments" :post="comment" :key="comment._id"></comment>
         </div>
 
     </div>

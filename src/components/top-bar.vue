@@ -10,7 +10,6 @@
 
 <script>
     import login from './login.vue'
-    import homeIcon from '../assets/images/home.png';
     let analyticsOverlay;
 
     export default {

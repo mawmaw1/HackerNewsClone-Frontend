@@ -19,14 +19,14 @@
             }
         },
         methods: {
-            navigateToPost(){
-                this.$router.push({
-                    name: 'Post',
-                    params: {
-                        postId: this.post.id
-                    }
-                })
-            }
+//            navigateToPost(){
+//                this.$router.push({
+//                    name: 'Post',
+//                    params: {
+//                        postId: this.post.id
+//                    }
+//                })
+//            }
         }
     }
 
@@ -62,7 +62,7 @@
             </p>
         </div>
         <div class="details">
-            <p>{{post.points}} points by <a href="#">{{post.username}}</a> | <a href="#" v-on:click="navigateToPost">{{numberOfComments}} comments</a></p>
+            <p>{{post.points}} points by <a href="#">{{post.username}}</a> | <router-link :to="{path: '/post/' + post.id}" >{{numberOfComments}} comments</router-link></p>
         </div>
     </li>
 </template>

@@ -13,6 +13,10 @@
             this.$router.addRoutes([
                 {
                     path: '/',
+                    redirect: '/posts/1'
+                },
+                {
+                    path: '/posts/:page',
                     name: 'Posts',
                     component: postList
                 },
