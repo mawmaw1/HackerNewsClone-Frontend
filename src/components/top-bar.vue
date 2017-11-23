@@ -4,19 +4,24 @@
         <router-link to="/" id="postsNav" class="nav"><p>Posts</p></router-link>
         <!--<a href="#" id="submit" class="nav"><p>Submit</p></a>-->
         <router-link to="/submit" id="submitNav" class="nav"><p>Submit</p></router-link>
-        <router-link to="/login" id="loginNav" class="nav"><p>Login</p></router-link>
+        <router-link v-if="!loggedIn" to="/login" id="loginNav" class="nav"><p>Login</p></router-link>
+        <div class="nav" v-if="loggedIn" id="username" @mouseover.native="logoHoverStart" @mouseleave.native="logoHoverEnd">{{username}}</div>
     </div>
 </template>
 
 <script>
     import login from './login.vue'
+    import query from '../modules/query'
+
     let analyticsOverlay;
 
     export default {
         components: {login},
         data() {
             return {
-                title: 'HakkeNyhedern'
+                title: 'HakkeNyhedern',
+                loggedIn: false,
+                username: null
             }
         },
         methods: {
@@ -29,6 +34,23 @@
         },
         mounted(){
             analyticsOverlay = document.getElementById('analytics-overlay')
+            query.ping()
+                .then(body => {
+                    if (body.data === 'pong') {
+                        return
+                    }
+                    this.username = body.data.username
+                    this.loggedIn = true
+                    setTimeout(() => {
+                        this.logoHoverStart()
+                        setTimeout(() => {
+                            this.logoHoverEnd()
+                        }, 200)
+                    }, 2000)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }
 </script>
@@ -61,7 +83,7 @@
 
 
 
-        #loginNav
+        #loginNav, #username
             justify-self: end
             margin-right: 25px
 

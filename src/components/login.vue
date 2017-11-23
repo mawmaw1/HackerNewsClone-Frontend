@@ -30,15 +30,16 @@
                         })
             },
             submitRegister(){
-                const username = this.login.username;
-                const password = this.login.password;
+                const username = this.register.username;
+                const password = this.register.password;
 
-                query.login(username, password)
-                        .then(_ => {
+                query.register(username, password)
+                        .then(res => {
+                            console.log(res)
                             this.$router.push('/')
                         })
                         .catch(_ => {
-                            alert('Wrong username or password')
+                            alert('Hej')
                         })
             }
         },

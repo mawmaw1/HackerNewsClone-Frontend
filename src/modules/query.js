@@ -1,6 +1,8 @@
 const query = {};
 
 const _ = require('./extensions');
+const axios = require('axios')
+axios.defaults.withCredentials = true
 
 const origin = window.location.origin;
 
@@ -86,29 +88,45 @@ query.getPost = function(postId){
 
 query.login = function(username, password){
     let fullUrl = url('login');
-    return fetch(fullUrl, {
+    return axios(fullUrl, {
         method: 'POST',
         headers: jsonHeaders,
-        body: JSON.stringify({username, password})
-    }).then(response => {
-        console.log(response.headers.get())
-        if(!response.ok){
-            return Promise.reject('Bad username/password');
-        }
+        data: {username, password}
     })
+    // return fetch(fullUrl, {
+    //     method: 'POST',
+    //     headers: jsonHeaders,
+    //     body: JSON.stringify({username, password})
+    // }).then(response => {
+    //     console.log(response.headers.get())
+    //     if(!response.ok){
+    //         return Promise.reject('Bad username/password');
+    //     }
+    // })
 };
 
 query.register = function(username, password){
     let fullUrl = url('register');
-    return fetch(fullUrl, {
+    return axios(fullUrl, {
         method: 'POST',
         headers: jsonHeaders,
-        body: JSON.stringify({username, password})
-    }).then(response => {
-        if(!response.ok){
-            return Promise.reject('Server error');
-        }
+        data: {username, password}
     })
+    // return fetch(fullUrl, {
+    //     method: 'POST',
+    //     headers: jsonHeaders,
+    //     body: JSON.stringify({username, password})
+    // }).then(response => {
+    //     console.log(response)
+    //     if(!response.ok){
+    //         return Promise.reject('Server error');
+    //     }
+    // })
 };
+
+query.ping = function() {
+    let fullUrl = url('ping');    
+    return axios.get(fullUrl)
+}
 
 module.exports = query;
