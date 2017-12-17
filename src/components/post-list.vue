@@ -84,7 +84,6 @@
                         page: page
                     }
                 });
-//                this.getPosts(next);
             },
             prevPage(){
                 const page = this._page - 1;
@@ -94,7 +93,6 @@
                         page: page
                     }
                 });
-//                this.getPosts(prev);
             },
             scrollToTop(){
                 window.scrollTo(0,0);
@@ -127,8 +125,6 @@
             #nextBtn
                 margin-left: 10px
                 @include button($c-blue-700)
-
-
-
-
 </style>
+
+
