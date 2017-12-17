@@ -79,6 +79,20 @@ h1 {
   font-family: Raleway, sans-serif;
   font-weight: 200; }
 
+#analytics-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-image: url(images/c501fb297d87a87dc228d222cbf8bbe9-analytics-overlay.jpg);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s ease-in; }
+  #analytics-overlay._visible {
+    opacity: 0.5; }
+
 *::-webkit-input-placeholder {
   color: #CCCCCC; }
 

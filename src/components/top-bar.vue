@@ -4,12 +4,41 @@
         <router-link to="/" id="postsNav" class="nav"><p>Posts</p></router-link>
         <!--<a href="#" id="submit" class="nav"><p>Submit</p></a>-->
         <router-link to="/submit" id="submitNav" class="nav"><p>Submit</p></router-link>
-        <router-link to="/login" id="loginNav" class="nav"><p>Login</p></router-link>
+        <router-link v-if="!loggedIn" to="/login" id="loginNav" class="nav"><p>Login</p></router-link>
+        <div class="nav" v-if="loggedIn" id="username">{{username}}</div>
     </div>
 </template>
 
 <script>
-    export default {}
+    import login from './login.vue'
+    import query from '../modules/query'
+
+    export default {
+
+        data() {
+            return {
+                username: null
+            }
+        },
+        mounted(){
+            query.ping()
+                .then(body => {
+                    if (body.data === 'pong') {
+                        return
+                    }
+                    this.username = body.data.username;
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        computed: {
+            loggedIn(){
+                return (this.username && this.username !== '');
+            }
+        }
+    }
+
 </script>
 
 <style rel="stylesheet/sass" lang="sass" scoped>
@@ -34,8 +63,9 @@
             line-height: .95
             color: $c-grey-700
             padding-left: 50px
+            
+        #loginNav, #username
 
-        #loginNav
             justify-self: end
             margin-right: 25px
 
